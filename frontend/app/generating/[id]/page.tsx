@@ -32,7 +32,7 @@ export default function GeneratingPage() {
 
   return (
     <main className="texture-grain mx-auto max-w-2xl px-6 py-16">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-oxblood">Building your plan</p>
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-gold">Building your plan</p>
       <h1 className="mt-4 font-display text-3xl font-medium">Six agents, one real result</h1>
       <p className="mt-2 max-w-md text-ink-dim">
         Watch what each one finds: what you know, what the market wants, where the gaps are, and what to build to

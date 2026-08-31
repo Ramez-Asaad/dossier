@@ -9,6 +9,7 @@ import { MissionCard } from "@/components/MissionCard";
 import { ReadinessMeter } from "@/components/ReadinessMeter";
 import { SkillList } from "@/components/SkillList";
 import { WarningIcon } from "@/components/icons";
+import { SealIllustration } from "@/components/illustrations";
 import type { BaselineResult, FinalPlan } from "@/lib/types";
 
 export default function ResultsPage() {
@@ -79,8 +80,14 @@ export default function ResultsPage() {
         </div>
       )}
 
-      <div className="mt-10">
+      <div className="mt-10 flex items-center justify-between gap-6">
         <ReadinessMeter percent={plan.readiness_percent} />
+        <div className="hidden shrink-0 flex-col items-center sm:flex">
+          <SealIllustration state={plan.fully_covered ? "certified" : "in-progress"} className="h-20 w-20" />
+          <p className="mt-1 font-mono text-[10px] uppercase tracking-wide text-ink-dim">
+            {plan.fully_covered ? "Fully covered" : "In progress"}
+          </p>
+        </div>
       </div>
 
       <section className="mt-10">

@@ -21,7 +21,12 @@ const config: Config = {
         },
         gold: {
           DEFAULT: "#8a6b28",
+          bright: "#a8822f",
           dim: "#f1e7cf",
+        },
+        rust: {
+          DEFAULT: "#a8503f",
+          dim: "#f4e2da",
         },
       },
       fontFamily: {

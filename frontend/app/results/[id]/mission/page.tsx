@@ -77,7 +77,7 @@ export default function MissionPage() {
 
   return (
     <main className="texture-grain mx-auto max-w-2xl px-6 py-16">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-oxblood">Work simulation</p>
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-rust">Work simulation</p>
       <h1 className="mt-4 font-display text-3xl font-medium">{plan.mission.title}</h1>
       <p className="mt-2 text-ink-dim">{plan.mission.brief}</p>
       <p className="mt-4 text-sm text-ink-dim/80">

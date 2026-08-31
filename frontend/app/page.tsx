@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createProfile } from "@/lib/api";
+import { DossierIllustration } from "@/components/illustrations";
 
 function linesToList(value: string): string[] {
   return value
@@ -42,13 +43,18 @@ export default function HomePage() {
 
   return (
     <main className="texture-grain mx-auto max-w-2xl px-6 py-16">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-oxblood">Evidence Engine, No. 01</p>
+      <div className="flex items-start justify-between gap-6">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-oxblood">Evidence Engine, No. 01</p>
 
-      <h1 className="mt-4 font-display text-4xl font-medium leading-[1.1] sm:text-5xl">
-        Stop taking courses.
-        <br />
-        <em className="text-ink-dim">Start building evidence.</em>
-      </h1>
+          <h1 className="mt-4 font-display text-4xl font-medium leading-[1.1] sm:text-5xl">
+            Stop taking courses.
+            <br />
+            <em className="text-ink-dim">Start building evidence.</em>
+          </h1>
+        </div>
+        <DossierIllustration className="hidden h-28 w-40 shrink-0 sm:block" />
+      </div>
 
       <p className="mt-5 max-w-lg text-ink-dim">
         Tell it what you&rsquo;ve studied and built. Six agents compare that against what the role actually
