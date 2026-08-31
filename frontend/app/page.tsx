@@ -45,7 +45,7 @@ export default function HomePage() {
     <main className="texture-grain mx-auto max-w-2xl px-6 py-16">
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-oxblood">Evidence Engine, No. 01</p>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-oxblood">Dossier, No. 01</p>
 
           <h1 className="mt-4 font-display text-4xl font-medium leading-[1.1] sm:text-5xl">
             Stop taking courses.

@@ -1,6 +1,6 @@
-# Evidence Engine
+# Dossier
 
-Working name for this project. Rename freely once a final name is picked; update this file and the README if you do.
+Named during the hackathon; if renamed again, update this file and the README too.
 
 ## What this is
 

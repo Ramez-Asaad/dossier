@@ -67,12 +67,22 @@ export type AgentName =
   | "validator"
   | "finalize";
 
+export interface LlmCallRecord {
+  provider: string;
+  model: string;
+  max_tokens: number;
+  system_prompt: string;
+  user_prompt: string;
+}
+
 export interface AgentUpdateEvent {
   type: "agent_update";
   agent: AgentName;
   attempt: number;
   summary: string;
-  data: Record<string, unknown>;
+  input: Record<string, unknown>;
+  output: Record<string, unknown>;
+  llm_calls: LlmCallRecord[];
 }
 
 export interface StreamDoneEvent {

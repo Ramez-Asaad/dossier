@@ -22,7 +22,7 @@ const monoFont = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Evidence Engine",
+  title: "Dossier",
   description: "Learn, build, prove: a career-engineering pipeline for students.",
 };
 

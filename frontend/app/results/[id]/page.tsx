@@ -61,7 +61,15 @@ export default function ResultsPage() {
 
   return (
     <main className="texture-grain mx-auto max-w-2xl px-6 py-16">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-oxblood">{plan.target_role}</p>
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-oxblood">{plan.target_role}</p>
+        <Link
+          href={`/results/${params.id}/trace`}
+          className="underline-draw font-mono text-xs uppercase tracking-wide text-ink-dim"
+        >
+          View full trace
+        </Link>
+      </div>
       <h1 className="mt-4 font-display text-4xl font-medium">Your industry readiness plan</h1>
       <p className="mt-2 text-ink-dim">
         {plan.fully_covered

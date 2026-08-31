@@ -56,6 +56,15 @@ _PROVIDER_DEFAULT_MODEL = {
 _anthropic_client: Anthropic | None = None
 _groq_client: OpenAI | None = None
 
+# Append-only record of every successful call: provider, the exact resolved
+# config that produced the output (model, max_tokens after any retry
+# escalation), and the full prompts. Read by the tracing route
+# (app/api/routes.py) to show "config of each agent" without agents needing
+# to report anything themselves, this is a property of the dispatcher, not
+# of any one agent. Never cleared in place, callers track their own slice
+# via len(call_log) at the start of a request.
+call_log: list[dict] = []
+
 
 def _resolve_provider() -> str:
     provider = os.environ.get("LLM_PROVIDER")
@@ -89,10 +98,22 @@ def call_json(system: str, user: str, model: str | None = None, max_tokens: int 
     resolved_model = model or _default_model_for(provider)
 
     if provider == "groq":
-        return _call_groq(system, user, resolved_model, max_tokens)
-    if provider == "anthropic":
-        return _call_anthropic(system, user, resolved_model, max_tokens)
-    raise RuntimeError(f"Unknown LLM_PROVIDER: {provider!r}. Expected 'anthropic' or 'groq'.")
+        result, actual_max_tokens = _call_groq(system, user, resolved_model, max_tokens)
+    elif provider == "anthropic":
+        result, actual_max_tokens = _call_anthropic(system, user, resolved_model, max_tokens)
+    else:
+        raise RuntimeError(f"Unknown LLM_PROVIDER: {provider!r}. Expected 'anthropic' or 'groq'.")
+
+    call_log.append(
+        {
+            "provider": provider,
+            "model": resolved_model,
+            "max_tokens": actual_max_tokens,
+            "system_prompt": system,
+            "user_prompt": user,
+        }
+    )
+    return result
 
 
 def _retry_on_rate_limit(make_request, rate_limit_exception):
@@ -107,7 +128,7 @@ def _retry_on_rate_limit(make_request, rate_limit_exception):
             delay *= 2
 
 
-def _call_anthropic(system: str, user: str, model: str, max_tokens: int) -> dict:
+def _call_anthropic(system: str, user: str, model: str, max_tokens: int) -> tuple[dict, int]:
     client = _get_anthropic_client()
 
     def make_request():
@@ -120,10 +141,10 @@ def _call_anthropic(system: str, user: str, model: str, max_tokens: int) -> dict
 
     response = _retry_on_rate_limit(make_request, AnthropicRateLimitError)
     text = "".join(block.text for block in response.content if block.type == "text")
-    return json.loads(text)
+    return json.loads(text), max_tokens
 
 
-def _call_groq(system: str, user: str, model: str, max_tokens: int) -> dict:
+def _call_groq(system: str, user: str, model: str, max_tokens: int) -> tuple[dict, int]:
     client = _get_groq_client()
     current_max_tokens = max(max_tokens, GROQ_MIN_MAX_TOKENS)
     delay = RATE_LIMIT_BASE_DELAY_SECONDS
@@ -139,7 +160,7 @@ def _call_groq(system: str, user: str, model: str, max_tokens: int) -> dict:
                     {"role": "user", "content": user},
                 ],
             )
-            return json.loads(response.choices[0].message.content)
+            return json.loads(response.choices[0].message.content), current_max_tokens
         except GroqRateLimitError:
             if attempt == MAX_RATE_LIMIT_RETRIES - 1:
                 raise

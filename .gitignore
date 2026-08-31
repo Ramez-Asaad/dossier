@@ -19,3 +19,6 @@ out/
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude Code local tool config, not project content
+.claude/settings.local.json

@@ -1,4 +1,4 @@
-import type { BaselineResult, FinalPlan, ProfileInput, SprintResult, StreamEvent } from "./types";
+import type { AgentUpdateEvent, BaselineResult, FinalPlan, ProfileInput, SprintResult, StreamEvent } from "./types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 
@@ -86,7 +86,7 @@ export async function streamGeneratePlan(sessionId: string, onEvent: (event: Str
         throw new Error(event.message);
       }
       if (event.type === "agent_update" && event.agent === "finalize") {
-        finalPlan = (event.data as { final_plan: FinalPlan }).final_plan;
+        finalPlan = (event.output as { final_plan: FinalPlan }).final_plan;
       }
     }
   }
@@ -95,4 +95,9 @@ export async function streamGeneratePlan(sessionId: string, onEvent: (event: Str
     throw new Error("Stream ended without producing a plan.");
   }
   return finalPlan;
+}
+
+export async function getTrace(sessionId: string): Promise<AgentUpdateEvent[]> {
+  const response = await fetch(`${API_BASE_URL}/sessions/${sessionId}/trace`);
+  return jsonOrThrow(response);
 }

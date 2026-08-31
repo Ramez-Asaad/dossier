@@ -1,7 +1,26 @@
-# Evidence Engine
+# Dossier
 
-Working name, rename freely. Built entirely during the micro1 Agentic Workflows Hackathon; nothing
-in this repository predates the event.
+<img src="docs/assets/dossier-illustration.svg" alt="Dossier: a folder of evidence under review" width="360" />
+
+Dossier turns a student's actual courses and projects into one real engineering mission, tied to
+the exact skill gaps a target job requires, and proves it closes them.
+
+Built entirely during the micro1 Agentic Workflows Hackathon; nothing in this repository predates
+the event.
+
+Dossier is a six-agent pipeline (Profiler, Industry Analyst, Skill Mapper, Gap Analyst, Project
+Architect, Validator) that reads a student's background, compares it against real job-posting
+requirements for their target role, and generates one project where every requirement is explicitly
+tied to the specific skill gap it closes. A bounded verification loop checks the mission's coverage
+before finalizing it, so the output is validated, not just generated. A live trace shows exactly
+what each agent read, produced, and which model and prompt configuration ran it, persisted so it
+can be reviewed after the fact, not just watched once. A second phase turns the finished mission
+into a sprint-by-sprint work simulation: submit what you built, get evaluated against the actual
+requirement, unlock the next sprint.
+
+Evaluated against a single-LLM-call baseline on 10 synthetic student profiles, scored on what
+percentage of priority skill gaps the recommended project actually demonstrates: the baseline
+averaged 25% coverage, the agent pipeline averaged 68%, and beat the baseline on all 10 profiles.
 
 ## Who has this problem, and why it's worth solving
 
@@ -17,20 +36,41 @@ the right gaps.
 
 Pitch: stop taking courses, start turning what you know into evidence that you can do the job.
 
-## What it does
+## How it works
 
-Six agents (Profiler, Industry Analyst, Skill Mapper, Gap Analyst, Project Architect, Validator)
-plus a bounded verification/revision loop turn a student's background and a target role into one
-real project, each requirement explicitly tied to the specific skill gap it closes. A second phase
-(Sprint Manager) turns that project into a sprint-by-sprint work simulation: submit what you built,
-get evaluated against the actual requirement, unlock the next sprint.
+```mermaid
+flowchart TD
+    IN["Student background<br/>+ target role"] --> P["01 · Profiler<br/><i>What do you actually know?</i>"]
+    P --> IA["02 · Industry Analyst<br/><i>What does the market require?</i>"]
+    IA --> SM["03 · Skill Mapper<br/><i>How do these connect?</i>"]
+    SM --> GA["04 · Gap Analyst<br/><i>What's missing?</i>"]
+    GA --> PA["05 · Project Architect<br/><i>What should you build?</i>"]
+    PA --> V{"06 · Validator<br/><i>Does this close the gaps?</i>"}
+    V -- "gaps remain, revisions < 2" --> PA
+    V -- "fully covered" --> F["07 · Finalize"]
+    F --> OUT["One real mission,<br/>every requirement tied to a gap"]
+    OUT --> WS["Work simulation:<br/>Sprint Manager reviews what you build"]
+```
+
+The loop from Validator back to Project Architect is the verification step, not decoration: a
+mission that doesn't cover its priority gaps gets sent back and revised, bounded at 2 attempts.
+See [`docs/agents.md`](docs/agents.md) for what each step actually does and
+[`docs/trajectories/`](docs/trajectories/) for real captured runs through this exact pipeline.
 
 ## Results
+
+<img src="docs/assets/seal-certified.svg" alt="Certified seal" width="90" align="right" />
 
 Real evaluation, 10 synthetic profiles, baseline (single LLM call) vs. the full agent pipeline,
 scored on skill-gap-to-project coverage:
 
-**Baseline: 0.25 average coverage. Agent: 0.68. Roughly 2.7x.**
+```
+Baseline   ████████░░░░░░░░░░░░░░░░░░░░░░░░  25%
+Agent      █████████████████████████░░░░░░░  68%
+```
+
+**Baseline: 0.25 average coverage. Agent: 0.68. Roughly 2.7x, and the agent beat the baseline on
+all 10 profiles.**
 
 Full numbers, per-profile breakdown, and the one case that came out weakest (and why) are in
 [`docs/evaluation-results.md`](docs/evaluation-results.md).
@@ -41,6 +81,7 @@ Full numbers, per-profile breakdown, and the one case that came out weakest (and
 - [`docs/reproduction.md`](docs/reproduction.md): clean-environment setup, exact commands, expected output, versions, runtime and cost.
 - [`docs/evaluation-results.md`](docs/evaluation-results.md): the real baseline-vs-agent numbers and the challenging case.
 - [`docs/hot-take.md`](docs/hot-take.md): the main failure mode this project actually hit, and the general lesson from it.
+- [`docs/video-script.md`](docs/video-script.md): the 5-minute solution video script, timestamped.
 - [`docs/trajectories/`](docs/trajectories/): real captured runs for every agent, not fabricated examples.
 - [`docs/architecture.md`](docs/architecture.md): pipeline, state schema, orchestration, data sources, API surface.
 - [`docs/agents.md`](docs/agents.md): per-agent spec (inputs, outputs, tools, guardrails).

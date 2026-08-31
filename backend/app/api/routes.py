@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
+from app import llm
 from app import trace as trace_module
 from app.agents.sprint_manager import evaluate_submission
 from app.baseline import run_baseline
@@ -38,7 +39,12 @@ class SprintSubmission(BaseModel):
 @router.post("/profile")
 def create_profile(profile_in: ProfileIn) -> dict:
     session_id = str(uuid.uuid4())
-    _sessions[session_id] = {"profile": StudentProfile(**profile_in.model_dump()), "plan": None, "baseline": None}
+    _sessions[session_id] = {
+        "profile": StudentProfile(**profile_in.model_dump()),
+        "plan": None,
+        "baseline": None,
+        "trace": [],
+    }
     return {"session_id": session_id}
 
 
@@ -55,26 +61,40 @@ def generate_plan(session_id: str) -> dict:
 def generate_plan_stream(session_id: str) -> StreamingResponse:
     """Same pipeline as /generate-plan, but emits one NDJSON line per agent
     as it finishes instead of waiting silently for the whole run. Each line
-    carries a short human-readable `summary` (see app/trace.py) plus the
-    agent's raw state delta in `data`, so this doubles as a live trace for
-    debugging and as the event feed the frontend's generating screen renders.
+    carries a short human-readable `summary` (see app/trace.py), the exact
+    state the agent read (`input`) and produced (`output`), and the config
+    of every LLM call it made (`llm_calls`: provider, model, max_tokens, full
+    prompts), pulled from `llm.call_log`. This doubles as a live trace for
+    the generating screen and, persisted into the session below, as the
+    standalone trace page a user can return to later.
     """
     session = _get_session(session_id)
     graph = get_graph()
 
     def event_stream():
         attempt_counts: dict[str, int] = {}
+        accumulated_state: dict = {"student_profile": _to_jsonable(session["profile"])}
+        log_cursor = len(llm.call_log)
+        events: list[dict] = []
         try:
             for chunk in graph.stream({"student_profile": session["profile"]}, stream_mode="updates"):
                 for node_name, delta in chunk.items():
                     attempt_counts[node_name] = attempt_counts.get(node_name, 0) + 1
+                    output = _to_jsonable(delta)
+                    llm_calls = llm.call_log[log_cursor:]
+                    log_cursor = len(llm.call_log)
                     event = {
                         "type": "agent_update",
                         "agent": node_name,
                         "attempt": attempt_counts[node_name],
                         "summary": trace_module.summarize(node_name, delta),
-                        "data": _to_jsonable(delta),
+                        "input": dict(accumulated_state),
+                        "output": output,
+                        "llm_calls": llm_calls,
                     }
+                    accumulated_state.update(output)
+                    events.append(event)
+                    session["trace"] = events
                     yield json.dumps(event) + "\n"
                     if node_name == "finalize":
                         session["plan"] = delta["final_plan"]
@@ -83,6 +103,12 @@ def generate_plan_stream(session_id: str) -> StreamingResponse:
             yield json.dumps({"type": "error", "message": str(exc)}) + "\n"
 
     return StreamingResponse(event_stream(), media_type="application/x-ndjson")
+
+
+@router.get("/sessions/{session_id}/trace")
+def get_trace(session_id: str) -> list[dict]:
+    session = _get_session(session_id)
+    return session.get("trace", [])
 
 
 def _to_jsonable(value: Any) -> Any:
@@ -125,7 +151,7 @@ def _get_session(session_id: str) -> dict:
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="Evidence Engine API")
+    app = FastAPI(title="Dossier API")
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://localhost:3000"],
