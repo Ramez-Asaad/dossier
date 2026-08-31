@@ -1,0 +1,21 @@
+{
+  "id": "profile-05",
+  "persona": "AI student -> NLP Engineer",
+  "input": {
+    "raw_courses": ["Natural Language Processing", "Neural Networks", "Linear Algebra"],
+    "raw_projects": [
+      "Sentiment analysis pipeline using Hugging Face transformers, fine-tuned BERT on a movie reviews dataset",
+      "Course project: built a simple rule-based chatbot"
+    ],
+    "github_urls": [],
+    "target_role": "NLP Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Both projects", "confidence": "high" },
+      { "name": "PyTorch", "evidence": "Fine-tuned BERT with Hugging Face transformers", "confidence": "medium" },
+      { "name": "Text pipelines", "evidence": "Sentiment analysis pipeline", "confidence": "medium" }
+    ],
+    "priority_gaps": ["Docker", "REST APIs", "Automated testing", "LLM integration", "Information retrieval"]
+  }
+}

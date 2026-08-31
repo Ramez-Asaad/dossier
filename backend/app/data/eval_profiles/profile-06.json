@@ -1,0 +1,24 @@
+{
+  "id": "profile-06",
+  "persona": "Computer Science student, already deployed a project -> ML Engineer",
+  "input": {
+    "raw_courses": ["Neural Networks", "Software Engineering", "Cloud Computing"],
+    "raw_projects": [
+      "Deployed a PyTorch image classifier as a REST API using FastAPI, containerized with Docker, and hosted on AWS with basic logging",
+      "Contributed automated tests to an open-source ML library"
+    ],
+    "github_urls": ["https://github.com/example/deployed-classifier"],
+    "target_role": "ML Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Both projects", "confidence": "high" },
+      { "name": "PyTorch", "evidence": "Deployed image classifier", "confidence": "high" },
+      { "name": "Docker", "evidence": "Deployed image classifier", "confidence": "high" },
+      { "name": "REST APIs", "evidence": "Deployed image classifier", "confidence": "high" },
+      { "name": "Cloud deployment", "evidence": "Hosted on AWS", "confidence": "medium" },
+      { "name": "Automated testing", "evidence": "Open-source ML library contribution", "confidence": "medium" }
+    ],
+    "priority_gaps": ["CI/CD", "Model monitoring", "Kubernetes", "Distributed systems"]
+  }
+}

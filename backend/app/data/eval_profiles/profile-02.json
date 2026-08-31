@@ -1,0 +1,22 @@
+{
+  "id": "profile-02",
+  "persona": "AI student -> Computer Vision Engineer",
+  "input": {
+    "raw_courses": ["Neural Networks", "Computer Vision", "Linear Algebra"],
+    "raw_projects": [
+      "Real-time face detection app using OpenCV and a pretrained model, running on a live webcam feed",
+      "Semantic segmentation project in PyTorch for a course assignment"
+    ],
+    "github_urls": [],
+    "target_role": "Computer Vision Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Both projects", "confidence": "high" },
+      { "name": "OpenCV", "evidence": "Face detection app", "confidence": "high" },
+      { "name": "PyTorch", "evidence": "Semantic segmentation project", "confidence": "medium" },
+      { "name": "Real-time inference", "evidence": "Face detection app runs on a live webcam feed", "confidence": "medium" }
+    ],
+    "priority_gaps": ["Docker", "REST APIs", "Automated testing", "Model optimization", "C++"]
+  }
+}

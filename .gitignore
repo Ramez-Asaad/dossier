@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+backend/app/data/skill_mapping_cache.json
+
+# Env
+.env
+.env.local
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db

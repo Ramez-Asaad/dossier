@@ -1,0 +1,10 @@
+{
+    "results": [
+        {
+            "requirement": "Create a pipeline that captures video frames, runs inference on each frame instantly, and displays detections, achieving real-time inference performance.",
+            "status": "partial",
+            "feedback": "The script captures frames and runs inference, but it only prints the detected class to the console. You need to overlay detection results (e.g., bounding boxes and labels) on the video frames and display them in a window, and verify that the processing rate meets a real\u00e2\u20ac\u2018time threshold (e.g., \u00e2\u2030\u00a524\u00e2\u20ac\u00affps)."
+        }
+    ],
+    "next_sprint_unlocked": false
+}

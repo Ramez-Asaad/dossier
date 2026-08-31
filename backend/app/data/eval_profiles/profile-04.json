@@ -1,0 +1,20 @@
+{
+  "id": "profile-04",
+  "persona": "Data Science student -> ML Engineer",
+  "input": {
+    "raw_courses": ["Statistics", "Probability", "Database Management", "Neural Networks"],
+    "raw_projects": [
+      "Churn prediction model using scikit-learn, presented as a Jupyter notebook analysis",
+      "Class project: A/B test analysis of a synthetic marketing dataset using SQL and Python"
+    ],
+    "github_urls": [],
+    "target_role": "ML Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Both projects", "confidence": "high" },
+      { "name": "SQL", "evidence": "A/B test analysis project", "confidence": "high" }
+    ],
+    "priority_gaps": ["Docker", "REST APIs", "CI/CD", "Model monitoring", "Kubernetes"]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "profile-08",
+  "persona": "Software Engineering student, API-heavy background -> AI Engineer",
+  "input": {
+    "raw_courses": ["Software Engineering", "Web Development", "Operating Systems"],
+    "raw_projects": [
+      "Built a customer support ticketing REST API in Django with automated tests and Docker deployment",
+      "Integrated OpenAI's API into a side project chatbot for FAQ answering"
+    ],
+    "github_urls": ["https://github.com/example/support-api"],
+    "target_role": "AI Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Both projects", "confidence": "high" },
+      { "name": "REST APIs", "evidence": "Ticketing API project", "confidence": "high" },
+      { "name": "Docker", "evidence": "Ticketing API project", "confidence": "high" },
+      { "name": "Automated testing", "evidence": "Ticketing API project", "confidence": "high" },
+      { "name": "LLM integration", "evidence": "OpenAI API chatbot side project", "confidence": "medium" }
+    ],
+    "priority_gaps": ["Prompt engineering", "Model monitoring", "Distributed systems", "SQL"]
+  }
+}

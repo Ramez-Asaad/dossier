@@ -1,0 +1,29 @@
+{
+  "role": "NLP Engineer",
+  "postings": [
+    {
+      "title": "NLP Engineer",
+      "skills": ["Python", "PyTorch", "Text pipelines", "REST APIs", "Docker", "Model evaluation"],
+      "responsibilities": ["build text pipelines", "train NLP models", "deploy models", "evaluate model accuracy"],
+      "tools": ["Docker", "Git", "Hugging Face", "AWS"]
+    },
+    {
+      "title": "NLP Engineer, Search",
+      "skills": ["Python", "Text pipelines", "Information retrieval", "SQL", "REST APIs"],
+      "responsibilities": ["build text pipelines", "improve search relevance", "collaborate with product teams"],
+      "tools": ["Git", "Elasticsearch", "AWS"]
+    },
+    {
+      "title": "Senior NLP Engineer",
+      "skills": ["Python", "PyTorch", "LLM integration", "Model evaluation", "Docker", "Automated testing"],
+      "responsibilities": ["train NLP models", "integrate LLM APIs", "write automated tests", "monitor production systems"],
+      "tools": ["Docker", "Git", "Hugging Face", "MLflow"]
+    },
+    {
+      "title": "NLP Engineer, Conversational AI",
+      "skills": ["Python", "Text pipelines", "LLM integration", "REST APIs", "Prompt engineering"],
+      "responsibilities": ["build text pipelines", "integrate LLM APIs", "deploy models"],
+      "tools": ["Git", "Docker", "Hugging Face"]
+    }
+  ]
+}

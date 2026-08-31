@@ -1,0 +1,24 @@
+{
+  "id": "profile-03",
+  "persona": "Software Engineering student -> AI Engineer",
+  "input": {
+    "raw_courses": ["Software Engineering", "Web Development", "Database Management"],
+    "raw_projects": [
+      "Built and deployed a REST API for a task-management app using FastAPI and Docker, with automated tests and CI via GitHub Actions",
+      "Team capstone: microservices backend with PostgreSQL"
+    ],
+    "github_urls": ["https://github.com/example/task-api"],
+    "target_role": "AI Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Task-management API project", "confidence": "high" },
+      { "name": "REST APIs", "evidence": "Deployed FastAPI project", "confidence": "high" },
+      { "name": "Docker", "evidence": "Deployed FastAPI project", "confidence": "high" },
+      { "name": "Automated testing", "evidence": "Deployed FastAPI project", "confidence": "high" },
+      { "name": "CI/CD", "evidence": "GitHub Actions in FastAPI project", "confidence": "medium" },
+      { "name": "SQL", "evidence": "Capstone project with PostgreSQL", "confidence": "medium" }
+    ],
+    "priority_gaps": ["LLM integration", "Prompt engineering", "Model monitoring", "Distributed systems"]
+  }
+}

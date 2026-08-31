@@ -1,0 +1,19 @@
+{
+  "id": "profile-07",
+  "persona": "AI student, early and weak profile -> Computer Vision Engineer",
+  "input": {
+    "raw_courses": ["Introduction to Programming", "Neural Networks"],
+    "raw_projects": [
+      "Coursework assignment: implemented a basic image classifier following a tutorial, using PyTorch"
+    ],
+    "github_urls": [],
+    "target_role": "Computer Vision Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Only project is tutorial-based, no independent evidence", "confidence": "low" },
+      { "name": "PyTorch", "evidence": "Tutorial-based image classifier", "confidence": "low" }
+    ],
+    "priority_gaps": ["OpenCV", "Real-time inference", "Docker", "REST APIs", "Automated testing", "Model optimization"]
+  }
+}

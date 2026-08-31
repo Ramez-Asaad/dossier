@@ -1,0 +1,20 @@
+{
+  "id": "profile-10",
+  "persona": "AI student, broad coursework with no specialization -> ML Engineer",
+  "input": {
+    "raw_courses": ["Neural Networks", "Computer Vision", "Natural Language Processing", "Database Management"],
+    "raw_projects": [
+      "Several small course projects across vision and NLP assignments, none deployed or extended beyond the classroom"
+    ],
+    "github_urls": [],
+    "target_role": "ML Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Small course projects, spread across many topics", "confidence": "medium" },
+      { "name": "PyTorch", "evidence": "Vision and NLP assignments, none extended past coursework", "confidence": "low" },
+      { "name": "SQL", "evidence": "Database Management course, no project evidence", "confidence": "low" }
+    ],
+    "priority_gaps": ["Docker", "REST APIs", "CI/CD", "Automated testing", "Model monitoring", "Cloud deployment"]
+  }
+}

@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #f0ead9;
+}
+
+@keyframes grain-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-1%, 1%); }
+}
+
+.texture-grain {
+  position: relative;
+}
+
+.texture-grain::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-drift 9s steps(2) infinite;
+}
+
+.underline-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.25s ease;
+}
+
+.underline-draw:hover {
+  background-size: 100% 1px;
+}

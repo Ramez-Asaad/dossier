@@ -1,0 +1,35 @@
+{
+  "role": "ML Engineer",
+  "postings": [
+    {
+      "title": "Machine Learning Engineer",
+      "skills": ["Python", "SQL", "Docker", "PyTorch", "REST APIs", "CI/CD", "Model monitoring"],
+      "responsibilities": ["train models", "deploy models", "build data pipelines", "monitor production systems"],
+      "tools": ["Git", "Docker", "Kubernetes", "MLflow", "AWS"]
+    },
+    {
+      "title": "ML Engineer, Platform",
+      "skills": ["Python", "Docker", "Kubernetes", "REST APIs", "Testing", "Cloud deployment"],
+      "responsibilities": ["build model serving infrastructure", "collaborate with software engineers", "monitor production systems"],
+      "tools": ["Docker", "Kubernetes", "GCP", "Terraform", "Git"]
+    },
+    {
+      "title": "Machine Learning Engineer II",
+      "skills": ["Python", "SQL", "PyTorch", "TensorFlow", "Model monitoring", "Automated testing"],
+      "responsibilities": ["train models", "evaluate models", "build data pipelines", "write automated tests"],
+      "tools": ["Git", "MLflow", "Airflow", "AWS"]
+    },
+    {
+      "title": "Applied ML Engineer",
+      "skills": ["Python", "Docker", "REST APIs", "SQL", "Cloud deployment"],
+      "responsibilities": ["deploy models", "build pipelines", "collaborate with product teams"],
+      "tools": ["Docker", "Git", "AWS", "MLflow"]
+    },
+    {
+      "title": "ML Infrastructure Engineer",
+      "skills": ["Python", "Kubernetes", "Docker", "CI/CD", "Model monitoring", "Distributed systems"],
+      "responsibilities": ["build model serving infrastructure", "monitor production systems", "build data pipelines"],
+      "tools": ["Kubernetes", "Docker", "Terraform", "GCP", "Git"]
+    }
+  ]
+}

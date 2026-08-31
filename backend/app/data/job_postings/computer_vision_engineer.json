@@ -1,0 +1,29 @@
+{
+  "role": "Computer Vision Engineer",
+  "postings": [
+    {
+      "title": "Computer Vision Engineer",
+      "skills": ["Python", "OpenCV", "PyTorch", "Real-time inference", "Docker", "REST APIs"],
+      "responsibilities": ["build vision models", "optimize real-time inference", "deploy models", "evaluate model accuracy"],
+      "tools": ["Docker", "Git", "CUDA", "AWS"]
+    },
+    {
+      "title": "Computer Vision Engineer, Robotics",
+      "skills": ["Python", "C++", "OpenCV", "Real-time inference", "Sensor fusion"],
+      "responsibilities": ["build vision models", "optimize real-time inference", "integrate with hardware"],
+      "tools": ["Git", "CUDA", "ROS"]
+    },
+    {
+      "title": "Senior Computer Vision Engineer",
+      "skills": ["Python", "PyTorch", "Model optimization", "Docker", "REST APIs", "Automated testing"],
+      "responsibilities": ["deploy models", "optimize real-time inference", "write automated tests", "monitor production systems"],
+      "tools": ["Docker", "Git", "MLflow", "AWS"]
+    },
+    {
+      "title": "Computer Vision Engineer, Edge",
+      "skills": ["Python", "C++", "Model optimization", "Real-time inference", "Embedded systems"],
+      "responsibilities": ["optimize real-time inference", "integrate with hardware", "evaluate model accuracy"],
+      "tools": ["Git", "CUDA", "TensorRT"]
+    }
+  ]
+}

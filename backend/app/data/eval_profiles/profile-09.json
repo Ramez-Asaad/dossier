@@ -1,0 +1,21 @@
+{
+  "id": "profile-09",
+  "persona": "Data Science student, cross-applying to NLP -> NLP Engineer",
+  "input": {
+    "raw_courses": ["Statistics", "Database Management", "Natural Language Processing"],
+    "raw_projects": [
+      "Text classification project using scikit-learn's TF-IDF vectorizer on a news dataset",
+      "SQL-heavy analysis of customer support tickets for a class project"
+    ],
+    "github_urls": [],
+    "target_role": "NLP Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Both projects", "confidence": "medium" },
+      { "name": "SQL", "evidence": "Customer support ticket analysis", "confidence": "high" },
+      { "name": "Text pipelines", "evidence": "TF-IDF text classification project uses classical, not deep-learning, techniques", "confidence": "low" }
+    ],
+    "priority_gaps": ["PyTorch", "LLM integration", "Docker", "REST APIs", "Automated testing", "Information retrieval"]
+  }
+}

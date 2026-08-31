@@ -1,0 +1,21 @@
+{
+  "id": "profile-01",
+  "persona": "Computer Science student -> ML Engineer",
+  "input": {
+    "raw_courses": ["Data Structures and Algorithms", "Neural Networks", "Database Management", "Operating Systems"],
+    "raw_projects": [
+      "Movie recommendation system using collaborative filtering, built in Python with Pandas and scikit-learn",
+      "Course project: trained a CNN image classifier in PyTorch on CIFAR-10"
+    ],
+    "github_urls": [],
+    "target_role": "ML Engineer"
+  },
+  "rubric": {
+    "demonstrated_skills": [
+      { "name": "Python", "evidence": "Both projects", "confidence": "high" },
+      { "name": "PyTorch", "evidence": "CNN image classifier project", "confidence": "medium" },
+      { "name": "SQL", "evidence": "Database Management course, no project evidence", "confidence": "low" }
+    ],
+    "priority_gaps": ["Docker", "REST APIs", "CI/CD", "Automated testing", "Model monitoring"]
+  }
+}

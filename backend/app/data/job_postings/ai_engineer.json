@@ -1,0 +1,29 @@
+{
+  "role": "AI Engineer",
+  "postings": [
+    {
+      "title": "AI Engineer",
+      "skills": ["Python", "REST APIs", "Docker", "LLM integration", "Testing", "SQL"],
+      "responsibilities": ["build AI-powered features", "integrate LLM APIs", "write automated tests", "collaborate with product teams"],
+      "tools": ["Docker", "Git", "CI/CD", "AWS"]
+    },
+    {
+      "title": "AI Engineer, Platform",
+      "skills": ["Python", "Docker", "Kubernetes", "REST APIs", "Model monitoring"],
+      "responsibilities": ["build model serving infrastructure", "monitor production systems", "collaborate with software engineers"],
+      "tools": ["Docker", "Kubernetes", "Git", "GCP"]
+    },
+    {
+      "title": "Applied AI Engineer",
+      "skills": ["Python", "LLM integration", "REST APIs", "SQL", "Automated testing", "Prompt engineering"],
+      "responsibilities": ["integrate LLM APIs", "build AI-powered features", "write automated tests"],
+      "tools": ["Git", "Docker", "AWS"]
+    },
+    {
+      "title": "AI Systems Engineer",
+      "skills": ["Python", "Distributed systems", "Docker", "REST APIs", "CI/CD", "Model monitoring"],
+      "responsibilities": ["build model serving infrastructure", "monitor production systems", "build data pipelines"],
+      "tools": ["Docker", "Kubernetes", "Git", "Terraform"]
+    }
+  ]
+}
