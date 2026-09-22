@@ -45,10 +45,11 @@ export default function MissionPage() {
 
   async function handleSubmitSprint(index: number) {
     if (!plan) return;
-    const requirement = plan.mission.requirements[index];
+    const sprintSpec = plan.sprints?.[index];
+    const requirementsToEvaluate = sprintSpec?.requirements ?? [plan.mission.requirements[index]?.description ?? ""];
     updateSprint(index, { isSubmitting: true, error: null });
     try {
-      const result = await submitSprint(params.id, index, [requirement.description], sprints[index].submission);
+      const result = await submitSprint(params.id, index, requirementsToEvaluate, sprints[index].submission);
       const passed = result.results.every((r) => r.status === "pass");
       updateSprint(index, { isSubmitting: false, result, status: passed ? "passed" : "unlocked" });
       if (passed && index + 1 < sprints.length) {
@@ -88,16 +89,22 @@ export default function MissionPage() {
 
       <div className="mt-10 divide-y divide-ink-border border-t border-ink-border">
         {plan.mission.requirements.map((requirement, index) => {
-          const sprint = sprints[index];
-          if (!sprint) return null;
-          const isLocked = sprint.status === "locked";
+          const sprintState = sprints[index];
+          const sprintSpec = plan.sprints?.[index];
+          if (!sprintState) return null;
+          const isLocked = sprintState.status === "locked";
+          const addressesGap = sprintSpec?.addresses_gap ?? requirement.addresses_gap;
+          const title = sprintSpec?.title ?? `Sprint ${index + 1}`;
+          const objective = sprintSpec?.objective ?? requirement.description;
+          const deliverables = sprintSpec?.deliverables ?? [];
+
           return (
             <div key={index} className={`py-6 ${isLocked ? "opacity-40" : ""}`}>
               <div className="flex items-center justify-between">
                 <h2 className="flex items-center gap-2 font-display text-lg font-medium">
                   <span className="font-mono text-xs text-ink-dim">{String(index + 1).padStart(2, "0")}</span>
-                  Sprint {index + 1}
-                  {sprint.status === "passed" && (
+                  {title}
+                  {sprintState.status === "passed" && (
                     <span className="flex items-center gap-1 font-mono text-xs uppercase tracking-wide text-gold">
                       <CheckIcon className="h-3.5 w-3.5" /> complete
                     </span>
@@ -109,34 +116,45 @@ export default function MissionPage() {
                   )}
                 </h2>
                 <span className="font-mono text-xs uppercase tracking-wide text-ink-dim">
-                  {requirement.addresses_gap}
+                  {addressesGap}
                 </span>
               </div>
-              <p className="mt-2 text-sm text-ink-dim">{requirement.description}</p>
+              <p className="mt-2 text-sm text-ink-dim">{objective}</p>
 
-              {!isLocked && sprint.status !== "passed" && (
+              {deliverables.length > 0 && (
+                <div className="mt-3 text-xs text-ink-dim/90">
+                  <span className="font-mono uppercase tracking-wide text-oxblood">Expected Deliverables:</span>
+                  <ul className="mt-1 list-disc list-inside space-y-0.5">
+                    {deliverables.map((item, dIdx) => (
+                      <li key={dIdx}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {!isLocked && sprintState.status !== "passed" && (
                 <div className="mt-4">
                   <textarea
                     className="w-full border border-ink-border bg-transparent p-3 text-sm outline-none transition-colors focus:border-oxblood"
                     rows={3}
-                    placeholder="Describe what you built for this requirement, or paste the relevant code."
-                    value={sprint.submission}
+                    placeholder="Describe what you built for this sprint, or paste the relevant code/deliverables."
+                    value={sprintState.submission}
                     onChange={(event) => updateSprint(index, { submission: event.target.value })}
                   />
                   <button
                     onClick={() => handleSubmitSprint(index)}
-                    disabled={sprint.isSubmitting || !sprint.submission.trim()}
+                    disabled={sprintState.isSubmitting || !sprintState.submission.trim()}
                     className="mt-3 bg-ink px-5 py-2 font-display text-sm text-paper transition-opacity hover:opacity-90 disabled:opacity-40"
                   >
-                    {sprint.isSubmitting ? "Reviewing..." : "Submit for review"}
+                    {sprintState.isSubmitting ? "Reviewing..." : "Submit for review"}
                   </button>
-                  {sprint.error && <p className="mt-2 text-sm text-oxblood">{sprint.error}</p>}
+                  {sprintState.error && <p className="mt-2 text-sm text-oxblood">{sprintState.error}</p>}
                 </div>
               )}
 
-              {sprint.result && (
+              {sprintState.result && (
                 <ul className="mt-4 space-y-1.5 border-t border-ink-border pt-3">
-                  {sprint.result.results.map((r, i) => (
+                  {sprintState.result.results.map((r, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm">
                       <span
                         className={`mt-0.5 shrink-0 ${

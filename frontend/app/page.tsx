@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createProfile } from "@/lib/api";
+import { createProfile, parseFile } from "@/lib/api";
 import { DossierIllustration } from "@/components/illustrations";
 
 function linesToList(value: string): string[] {
@@ -20,7 +20,28 @@ export default function HomePage() {
   const [targetRole, setTargetRole] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>, target: "courses" | "projects") {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setError(null);
+    setIsUploading(true);
+    try {
+      const parsed = await parseFile(file);
+      if (target === "courses") {
+        setCourses((prev) => (prev ? `${prev}\n${parsed.text}` : parsed.text));
+      } else {
+        setProjects((prev) => (prev ? `${prev}\n${parsed.text}` : parsed.text));
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to parse uploaded file.");
+    } finally {
+      setIsUploading(false);
+      event.target.value = "";
+    }
+  }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -64,20 +85,51 @@ export default function HomePage() {
       <hr className="my-10 border-ink-border" />
 
       <form onSubmit={handleSubmit} className="space-y-7">
-        <Field
-          label="Courses"
-          hint="one per line"
-          value={courses}
-          onChange={setCourses}
-          placeholder={"Neural Networks\nDatabase Management"}
-        />
-        <Field
-          label="Projects"
-          hint="one per line, describe what each does"
-          value={projects}
-          onChange={setProjects}
-          placeholder={"Image classifier built with PyTorch, trained on a public dataset"}
-        />
+        <div>
+          <div className="flex items-center justify-between">
+            <FieldLabel label="Courses" hint="one per line" />
+            <label className="cursor-pointer font-mono text-xs text-oxblood hover:underline">
+              {isUploading ? "Uploading..." : "Upload syllabus/PDF"}
+              <input
+                type="file"
+                accept=".pdf,.txt,.md"
+                onChange={(e) => handleFileUpload(e, "courses")}
+                className="hidden"
+                disabled={isUploading}
+              />
+            </label>
+          </div>
+          <textarea
+            className="mt-2 w-full border-b border-ink-border bg-transparent py-2 text-sm outline-none transition-colors focus:border-oxblood"
+            rows={3}
+            value={courses}
+            onChange={(event) => setCourses(event.target.value)}
+            placeholder={"Neural Networks\nDatabase Management"}
+          />
+        </div>
+
+        <div>
+          <div className="flex items-center justify-between">
+            <FieldLabel label="Projects" hint="one per line, describe what each does" />
+            <label className="cursor-pointer font-mono text-xs text-oxblood hover:underline">
+              {isUploading ? "Uploading..." : "Upload resume/PDF"}
+              <input
+                type="file"
+                accept=".pdf,.txt,.md"
+                onChange={(e) => handleFileUpload(e, "projects")}
+                className="hidden"
+                disabled={isUploading}
+              />
+            </label>
+          </div>
+          <textarea
+            className="mt-2 w-full border-b border-ink-border bg-transparent py-2 text-sm outline-none transition-colors focus:border-oxblood"
+            rows={3}
+            value={projects}
+            onChange={(event) => setProjects(event.target.value)}
+            placeholder={"Image classifier built with PyTorch, trained on a public dataset"}
+          />
+        </div>
         <Field
           label="GitHub repos"
           hint="one per line, optional"

@@ -6,7 +6,7 @@ import json
 import uuid
 from typing import Any
 
-from fastapi import APIRouter, FastAPI, HTTPException
+from fastapi import APIRouter, FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -17,6 +17,7 @@ from app.agents.sprint_manager import evaluate_submission
 from app.baseline import run_baseline
 from app.graph import get_graph
 from app.state import StudentProfile
+from app.tools.file_parser import parse_file_contents
 
 router = APIRouter()
 
@@ -34,6 +35,18 @@ class ProfileIn(BaseModel):
 class SprintSubmission(BaseModel):
     requirements: list[str]
     submission_description: str
+
+
+@router.post("/parse-file")
+async def parse_file(file: UploadFile = File(...)) -> dict:
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="No filename provided.")
+    contents = await file.read()
+    try:
+        text = parse_file_contents(file.filename, contents)
+        return {"filename": file.filename, "text": text}
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
 
 
 @router.post("/profile")

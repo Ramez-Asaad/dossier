@@ -34,7 +34,7 @@ def run(state: PipelineState) -> dict:
         f"GitHub evidence:\n{repo_context}"
     )
 
-    result = llm.call_json(SYSTEM_PROMPT, user_prompt, max_tokens=768)
+    result = llm.call_json(SYSTEM_PROMPT, user_prompt, agent_name="profiler", max_tokens=768)
     skills = [SkillEntry(**entry) for entry in result.get("skills", [])]
     return {"skill_graph": skills, "github_fetch_issues": github_fetch_issues}
 

@@ -26,7 +26,7 @@ def run_baseline(profile: StudentProfile) -> dict:
         f"GitHub links:\n{_bulleted(profile.github_urls)}\n\n"
         f"Target: {target}"
     )
-    return llm.call_json(SYSTEM_PROMPT, user_prompt, max_tokens=1024)
+    return llm.call_json(SYSTEM_PROMPT, user_prompt, agent_name="baseline", max_tokens=1024)
 
 
 def _bulleted(items: list[str]) -> str:

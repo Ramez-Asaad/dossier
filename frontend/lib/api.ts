@@ -10,6 +10,16 @@ async function jsonOrThrow(response: Response) {
   return response.json();
 }
 
+export async function parseFile(file: File): Promise<{ filename: string; text: string }> {
+  const formData = new FormData();
+  formData.append("file", file);
+  const response = await fetch(`${API_BASE_URL}/parse-file`, {
+    method: "POST",
+    body: formData,
+  });
+  return jsonOrThrow(response);
+}
+
 export async function createProfile(profile: ProfileInput): Promise<{ session_id: string }> {
   const response = await fetch(`${API_BASE_URL}/profile`, {
     method: "POST",
