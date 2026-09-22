@@ -56,6 +56,15 @@ class Mission(BaseModel):
     requirements: list[MissionRequirement] = Field(default_factory=list)
 
 
+class SprintSpec(BaseModel):
+    index: int
+    title: str
+    objective: str
+    requirements: list[str] = Field(default_factory=list)
+    deliverables: list[str] = Field(default_factory=list)
+    addresses_gap: str
+
+
 class CoverageReport(BaseModel):
     covered_gaps: list[str] = Field(default_factory=list)
     uncovered_gaps: list[str] = Field(default_factory=list)

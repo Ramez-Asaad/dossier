@@ -70,7 +70,7 @@ def run(state: PipelineState) -> dict:
     if unmapped and required_skills:
         system_prompt = SYSTEM_PROMPT_TEMPLATE.format(skills="\n".join(f"- {s}" for s in required_skills))
         user_prompt = "Student concepts:\n" + "\n".join(f"- {concept}" for concept in unmapped)
-        result = llm.call_json(system_prompt, user_prompt, max_tokens=1024)
+        result = llm.call_json(system_prompt, user_prompt, agent_name="skill_mapper", max_tokens=1024)
 
         newly_inferred: dict[str, str] = {}
         for item in result.get("mappings", []):

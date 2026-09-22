@@ -25,4 +25,4 @@ def evaluate_submission(sprint_requirements: list[str], submission_description: 
         f"Sprint requirements:\n" + "\n".join(f"- {r}" for r in sprint_requirements) + "\n\n"
         f"Student submission:\n{submission_description}"
     )
-    return llm.call_json(SYSTEM_PROMPT, user_prompt, max_tokens=768)
+    return llm.call_json(SYSTEM_PROMPT, user_prompt, agent_name="sprint_manager", max_tokens=768)

@@ -44,7 +44,7 @@ def run(state: PipelineState) -> dict:
             f"Priority gaps:\n{gap_lines}\n\n"
             f"Student's existing skills and evidence:\n{evidence_lines}"
         )
-        result = llm.call_json(SYSTEM_PROMPT, user_prompt, max_tokens=1536)
+        result = llm.call_json(SYSTEM_PROMPT, user_prompt, agent_name="project_architect", max_tokens=1536)
     else:
         previous_mission = state["mission"]
         user_prompt = (
@@ -56,7 +56,7 @@ def run(state: PipelineState) -> dict:
             f"Uncovered gaps: {coverage.uncovered_gaps}\n"
             f"Validator recommendation: {coverage.recommendation}"
         )
-        result = llm.call_json(REVISION_SYSTEM_PROMPT, user_prompt, max_tokens=1536)
+        result = llm.call_json(REVISION_SYSTEM_PROMPT, user_prompt, agent_name="project_architect", max_tokens=1536)
 
     mission = Mission(
         title=result["title"],

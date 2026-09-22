@@ -31,6 +31,15 @@ export interface Mission {
   requirements: MissionRequirement[];
 }
 
+export interface SprintSpec {
+  index: number;
+  title: string;
+  objective: string;
+  requirements: string[];
+  deliverables: string[];
+  addresses_gap: string;
+}
+
 export interface CoverageReport {
   covered_gaps: string[];
   uncovered_gaps: string[];
@@ -43,6 +52,7 @@ export interface FinalPlan {
   demonstrated_skills: SkillEntry[];
   priority_gaps: GapEntry[];
   mission: Mission;
+  sprints?: SprintSpec[];
   coverage: CoverageReport;
   revisions_used: number;
   fully_covered: boolean;

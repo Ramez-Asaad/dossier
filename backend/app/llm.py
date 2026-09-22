@@ -53,6 +53,32 @@ _PROVIDER_DEFAULT_MODEL = {
     "groq": "openai/gpt-oss-120b",
 }
 
+# Per-agent model routing table:
+# Extraction & mapping agents can use faster / lighter models,
+# while synthesis/architecting agents use higher capacity models.
+_AGENT_MODEL_ROUTING = {
+    "anthropic": {
+        "profiler": "claude-haiku-3-5",
+        "industry_analyst": "claude-haiku-3-5",
+        "skill_mapper": "claude-haiku-3-5",
+        "gap_analyst": "claude-sonnet-5",
+        "project_architect": "claude-sonnet-5",
+        "validator": "claude-sonnet-5",
+        "sprint_manager": "claude-haiku-3-5",
+        "baseline": "claude-sonnet-5",
+    },
+    "groq": {
+        "profiler": "llama-3.1-8b-instant",
+        "industry_analyst": "llama-3.1-8b-instant",
+        "skill_mapper": "llama-3.1-8b-instant",
+        "gap_analyst": "llama-3.3-70b-versatile",
+        "project_architect": "openai/gpt-oss-120b",
+        "validator": "openai/gpt-oss-120b",
+        "sprint_manager": "llama-3.3-70b-versatile",
+        "baseline": "openai/gpt-oss-120b",
+    },
+}
+
 _anthropic_client: Anthropic | None = None
 _groq_client: OpenAI | None = None
 
@@ -93,9 +119,16 @@ def _get_groq_client() -> OpenAI:
     return _groq_client
 
 
-def call_json(system: str, user: str, model: str | None = None, max_tokens: int = 2048) -> dict:
+def call_json(
+    system: str,
+    user: str,
+    agent_name: str | None = None,
+    model: str | None = None,
+    max_tokens: int = 2048,
+) -> dict:
     provider = _resolve_provider()
-    resolved_model = model or _default_model_for(provider)
+    routed_model = _AGENT_MODEL_ROUTING.get(provider, {}).get(agent_name) if agent_name else None
+    resolved_model = model or routed_model or _default_model_for(provider)
 
     if provider == "groq":
         result, actual_max_tokens = _call_groq(system, user, resolved_model, max_tokens)

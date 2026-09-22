@@ -34,7 +34,7 @@ def run(state: PipelineState) -> dict:
             f"Mission brief: {state['mission'].brief}\n"
             f"Uncovered gap (highest priority first): {uncovered[0]}"
         )
-        result = llm.call_json(SYSTEM_PROMPT, user_prompt, max_tokens=256)
+        result = llm.call_json(SYSTEM_PROMPT, user_prompt, agent_name="validator", max_tokens=256)
         recommendation = result["recommendation"]
 
     coverage = CoverageReport(covered_gaps=covered, uncovered_gaps=uncovered, recommendation=recommendation)
